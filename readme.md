@@ -16,8 +16,7 @@ sites:                            # object of target => alias/-es, defaults to /
     /home/vagrant/foo:
         -   foo.dev
         -   www.foo.dev
-    /home/vagrant/bar:
-        -   api.foo.dev
+    /home/vagrant/bar: api.foo.dev
 versions:                         # all or some can be omitted
     apache:     2.4.*             # default, can be omitted, has to be compatible with apt-get
     php:        5.5.*             # default, can be omitted, has to be compatible with apt-get
@@ -25,12 +24,12 @@ versions:                         # all or some can be omitted
 databases:                        # str/array, can be omitted
     - foo
 provision:                        # all or some can be omitted
-    always:                       # str/array, will run every 'up' as user
+    always:                       # array, will run every 'up' as user
     - "do stuff"
-    always_root:                  # str/array, will run every 'up' as root
+    always_root:                  # array, will run every 'up' as root
     - "do stuff"
-    provision:                    # str/array, will run on first 'up' or explicit provision as user
+    provision:                    # array, will run on first 'up' or explicit provision as user
     - "do stuff"
-    provision_root:               # str/array, will run on first 'up' or explicit provision as root
+    provision_root:               # array, will run on first 'up' or explicit provision as root
     - "do stuff"
 ```
