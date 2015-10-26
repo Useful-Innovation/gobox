@@ -1,0 +1,14 @@
+<Directory __WEBROOT__>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+<VirtualHost *:80>
+    DocumentRoot __WEBROOT__
+    ServerName __PRIMARY__
+    ServerAlias __ALIASES__
+
+    ErrorLog ${APACHE_LOG_DIR}/__PRIMARY__-ERROR.log
+    CustomLog ${APACHE_LOG_DIR}/__PRIMARY__-ACCESS.log combined
+</VirtualHost>
