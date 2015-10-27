@@ -60,10 +60,9 @@ box['folders']['/home/vagrant/config'] = configDir
 
 # Create bash file with project variables
 File.open("#{configDir}/config.bash", 'w+') do |f|
-  f.write("VAGRANT_APACHE_VERSION=\"#{box['versions']['apache']}\"\n")
-  f.write("VAGRANT_PHP_VERSION=\"#{box['versions']['php']}\"\n")
-  f.write("VAGRANT_MYSQL_VERSION=\"#{box['versions']['mysql']}\"\n")
-  f.write("VAGRANT_DATABASES=\"#{[*box['databases']].join(',')}\"\n")
+  box['versions'].each do |k, v|
+    f.write("VAGRANT_#{k.upcase}_VERSION=\"#{v}\"\n")
+  end
 end
 
 # Create vhosts files
