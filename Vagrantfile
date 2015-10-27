@@ -39,6 +39,7 @@ defaults = {
   },
   "folders"   => {"/home/vagrant/#{projectName}" => projectDir},
   "sites"     => {"/home/vagrant/#{projectName}" => projectName},
+  "databases" => projectName,
   "provisioners" => {},
   "versions"  => {
     "apache"    => "2.4.*",
@@ -47,13 +48,18 @@ defaults = {
   }
 }
 
-# Read config from grunt and set defaults
-box = YAML.load_file('gobox.yaml')
-box['machine']        = defaults["machine"].merge!(box['machine'] || {})
-box['folders']      ||= defaults["folders"]
-box['sites']        ||= defaults["sites"]
-box['provisioners'] ||= defaults["provisioners"]
-box['versions']       = defaults["versions"].merge!(box['versions'] || {})
+# Read config and set defaults
+if File.exist?('gobox.yaml')
+  box = YAML.load_file('gobox.yaml')
+  box['machine']        = defaults["machine"].merge!(box['machine'] || {})
+  box['folders']      ||= defaults["folders"]
+  box['sites']        ||= defaults["sites"]
+  box['provisioners'] ||= defaults["provisioners"]
+  box['databases']    ||= defaults["databases"]
+  box['versions']       = defaults["versions"].merge!(box['versions'] || {})
+else
+  box = defaults
+end
 
 # Link vagrant map
 box['folders']['/home/vagrant/config'] = configDir
@@ -63,6 +69,7 @@ File.open("#{configDir}/config.bash", 'w+') do |f|
   box['versions'].each do |k, v|
     f.write("VAGRANT_#{k.upcase}_VERSION=\"#{v}\"\n")
   end
+  f.write("VAGRANT_DATABASES=\"#{[*box['databases']].join(',')}\"\n")
 end
 
 # Create vhosts files
