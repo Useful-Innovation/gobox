@@ -32,13 +32,6 @@ grep -q -F 'zend_extension=xdebug.so' $PHP_INI || echo -e '\n\nzend_extension=xd
 
 a2enmod rewrite
 
-echo "${LOGTITLE} Create databases"
-databases=(${VAGRANT_DATABASES//,/ })
-for i in "${!databases[@]}"
-do
-    mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS ${databases[i]}"
-done
-
 echo "${LOGTITLE} Install server tools"
 apt-get install -yqq \
     git \
