@@ -3,6 +3,22 @@
 require 'yaml'
 require 'fileutils'
 
+# Used to generate ip suffix from projectname.
+def numericHash(string,length=255)
+  hash = 0
+  string.each_byte { |b|
+    hash += b;
+    hash += (hash << 10);
+    hash ^= (hash >> 6);
+  }
+
+  hash += (hash << 3);
+  hash ^= (hash >> 11);
+  hash += (hash << 15);
+
+  return hash % length
+end
+
 # Check that vagrant-hostsupdater is installed
 if !Vagrant.has_plugin?("vagrant-hostsupdater")
   puts "Please run 'vagrant plugin install vagrant-hostsupdater' to install vagrant-hostsupdater"
@@ -13,9 +29,6 @@ end
 configDir       = File.expand_path(".vagrant/config")
 projectDir      = Dir.pwd
 projectName     = File.basename(projectDir)
-
-# Init randomizer
-randomizer = Random.new
 
 # Defaults
 defaults = {
@@ -79,9 +92,9 @@ Vagrant.configure(2) do |config|
   # Set box. Default to trusty(Ubuntu Server 14.04 LTS)
   config.vm.box = box['machine']["box"]
 
-  # Set IP for this machine or randomize one
+  # Set IP for this machine or create a numeric hash from hostname
   config.vm.network "private_network",
-    ip: box['machine']["ip"] || "192.168.#{randomizer.rand(10..255)}.#{randomizer.rand(1..255)}"
+    ip: box['machine']["ip"] || "192.168.200.#{numericHash(box['machine']["hostname"])}"
 
   # Set machine hostname
   config.vm.hostname = box['machine']["hostname"]
