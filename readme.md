@@ -7,7 +7,7 @@ Easy vagrant. Configure box in gobox.yaml. Vhosts will be created and hosts file
 machine:                          # all or some can be omitted
     box:        ubuntu/trusty64   # default, can be omitted
     memory:     1024              # default, can be omitted
-    ip:         192.168.13.37     # can be omitted, defaults to random IP
+    ip:         192.168.13.37     # can be omitted, defaults to 192.168.200.{hashed hostname}
     hostname:   MYBOX             # can be omitted, defaults to project directory name
 folders:                          # object of target => source, defaults to /home/vagrant/{folderName} => ./
     /home/vagrant/foo: foo
