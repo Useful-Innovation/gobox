@@ -49,11 +49,11 @@ defaults = {
 
 # Read config from grunt and set defaults
 box = YAML.load_file('gobox.yaml')
-box['machine']    =   defaults["machine"].merge!(box['machine'] || {})
-box['folders']    ||= defaults["folders"]
-box['sites']      ||= defaults["sites"]
-box['provisioners']  ||= defaults["provisioners"]
-box['versions']   =   defaults["versions"].merge!(box['versions'] || {})
+box['machine']        = defaults["machine"].merge!(box['machine'] || {})
+box['folders']      ||= defaults["folders"]
+box['sites']        ||= defaults["sites"]
+box['provisioners'] ||= defaults["provisioners"]
+box['versions']       = defaults["versions"].merge!(box['versions'] || {})
 
 # Link vagrant map
 box['folders']['/home/vagrant/config'] = configDir
