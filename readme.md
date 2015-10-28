@@ -23,7 +23,7 @@ versions:                         # all or some can be omitted
     mysql:      5.5.*             # default, can be omitted, has to be compatible with apt-get
 databases:                        # str/array, can be omitted
     - foo
-provisioners:                        # all or some can be omitted
+provisioners:                     # all or some can be omitted
     always:                       # array, will run every 'up' as user
     - "do stuff"
     always_root:                  # array, will run every 'up' as root
