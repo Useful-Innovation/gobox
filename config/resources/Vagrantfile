@@ -131,10 +131,10 @@ Vagrant.configure(2) do |config|
     name:         "root_provision",
     path:         "#{configDir}/provisioners/root_provision.sh"
 
-  if File.file?("#{vagrantDir}/provisioners/root_provision.sh")
+  if File.file?(".provisioners/root_provision.sh")
     config.vm.provision "shell",
       name:         "custom_root_provision",
-      path:         "#{vagrantDir}/provisioners/root_provision.sh"
+      path:         ".provisioners/root_provision.sh"
   end
 
   [*box['provisioners']['provision_root']].each do |command|
@@ -149,10 +149,10 @@ Vagrant.configure(2) do |config|
     path:         "#{configDir}/provisioners/root_always.sh",
     run:          "always"
 
-  if File.file?("#{vagrantDir}/provisioners/root_always.sh")
+  if File.file?(".provisioners/root_always.sh")
     config.vm.provision "shell",
       name:         "custom_root_always",
-      path:         "#{vagrantDir}/provisioners/root_always.sh",
+      path:         ".provisioners/root_always.sh",
       run:          "always"
   end
 
@@ -169,10 +169,10 @@ Vagrant.configure(2) do |config|
     path:         "#{configDir}/provisioners/user_provision.sh",
     privileged:   false
 
-  if File.file?("#{vagrantDir}/provisioners/user_provision.sh")
+  if File.file?(".provisioners/user_provision.sh")
     config.vm.provision "shell",
       name:         "custom_user_provision",
-      path:         "#{vagrantDir}/provisioners/user_provision.sh",
+      path:         ".provisioners/user_provision.sh",
       privileged:   false
   end
 
@@ -190,10 +190,10 @@ Vagrant.configure(2) do |config|
     run:          "always",
     privileged:   false
 
-  if File.file?("#{vagrantDir}/provisioners/user_always.sh")
+  if File.file?(".provisioners/user_always.sh")
     config.vm.provision "shell",
       name:         "custom_user_always",
-      path:         "#{vagrantDir}/provisioners/user_always.sh",
+      path:         ".provisioners/user_always.sh",
       run:          "always",
       privileged:   false
   end
