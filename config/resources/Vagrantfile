@@ -127,21 +127,25 @@ Vagrant.configure(2) do |config|
   # Provisioners
 
   # As root, on provision
-  config.vm.provision "root_provision",
+  config.vm.provision "shell",
+    name:         "root_provision",
     path:         "#{configDir}/provisioners/root_provision.sh"
 
   if File.file?(".provisioners/root_provision.sh")
-    config.vm.provision "custom_root_provision",
+    config.vm.provision "shell",
+      name:         "custom_root_provision",
       path:         ".provisioners/root_provision.sh"
   end
 
   [*box['provisioners']['provision_root']].each do |command|
-    config.vm.provision "custom_root_provision_inline",
+    config.vm.provision "shell",
+      name:       "custom_root_provision_inline",
       inline:     command
   end
 
   # As root, always
-  config.vm.provision "root_always",
+  config.vm.provision "shell",
+    name:         "root_always",
     path:         "#{configDir}/provisioners/root_always.sh",
     run:          "always"
 
@@ -154,7 +158,7 @@ Vagrant.configure(2) do |config|
 
   [*box['provisioners']['always_root']].each do |command|
     config.vm.provision "shell",
-      name:       "root_always_custom",
+      name:       "custom_root_always_inline",
       inline:     command,
       run:        "always"
   end
@@ -174,7 +178,7 @@ Vagrant.configure(2) do |config|
 
   [*box['provisioners']['provisioners']].each do |command|
     config.vm.provision "shell",
-      name:       "user_provision_custom",
+      name:       "custom_user_provision_inline",
       inline:     command,
       privileged: false
   end
@@ -196,7 +200,7 @@ Vagrant.configure(2) do |config|
 
   [*box['provisioners']['always']].each do |command|
     config.vm.provision "shell",
-      name:       "user_always_custom",
+      name:       "custom_user_always_inline",
       inline:     command,
       run:        "always",
       privileged: false
