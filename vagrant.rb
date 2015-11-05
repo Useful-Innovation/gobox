@@ -29,8 +29,13 @@ end
 vagrantDir      = File.expand_path(".vagrant")
 goboxDir        = File.expand_path(".vagrant/gobox")
 tempDir         = File.expand_path(".vagrant/gobox/temp")
+vhostsDir       = File.expand_path(".vagrant/gobox/temp/vhosts")
 projectDir      = Dir.pwd
 projectName     = File.basename(projectDir)
+
+# Create paths if not exists
+FileUtils.mkdir_p "#{tempDir}"
+FileUtils.mkdir_p "#{vhostsDir}"
 
 # Defaults
 defaults = {
@@ -78,10 +83,8 @@ end
 all_vhosts = []
 template = File.read("#{goboxDir}/resources/vhost.template")
 
-# Create dir if not exists
-FileUtils.mkdir_p "#{tempDir}/vhosts/"
 # Remove old vhosts
-Dir.glob("#{tempDir}/vhosts/*") do |f| File.delete(f) end
+Dir.glob("#{vhostsDir}/*") do |f| File.delete(f) end
 # Create new ones
 box['sites'].each do |target,hostnames|
   hostnames = [*hostnames]
@@ -92,7 +95,7 @@ box['sites'].each do |target,hostnames|
                     .gsub("__PRIMARY__",primary)
                     .gsub("__ALIASES__",hostnames.join(' '))
 
-  File.open("#{tempDir}/vhosts/#{primary}.conf", "w+") do |f| f.write(vhost) end
+  File.open("#{vhostsDir}/#{primary}.conf", "w+") do |f| f.write(vhost) end
 end
 
 Vagrant.configure(2) do |config|
