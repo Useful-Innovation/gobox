@@ -1,6 +1,6 @@
 #!/bin/bash
-cd /home/vagrant/config
-source config.bash
+cd /home/vagrant/.gobox
+source temp/config.bash
 
 LOGTITLE="----- Provisioning [user:provision]"
 echo "${LOGTITLE}"
@@ -8,7 +8,7 @@ echo "${LOGTITLE}"
 # source /home/vagrant/code/.provision/config
 
 # Include our bash scripts
-grep -q -F 'source ~/config/bash' ~/.bashrc || echo 'source ~/config/bash' >> ~/.bashrc
+grep -q -F 'source ~/.gobox/resources/bash' ~/.bashrc || echo 'source ~/.gobox/resources/bash' >> ~/.bashrc
 
 echo "${LOGTITLE} Update composer..."
 composer -q self-update

@@ -1,0 +1,3 @@
+# -*- mode: ruby -*-
+
+require("./.vagrant/gobox/vagrant.rb")

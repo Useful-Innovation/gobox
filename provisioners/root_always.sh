@@ -1,6 +1,6 @@
 #!/bin/bash
-cd /home/vagrant/config
-source config.bash
+cd /home/vagrant/.gobox
+source temp/config.bash
 
 LOGTITLE="----- Provisioning [root:always]"
 echo "${LOGTITLE}"
@@ -9,7 +9,7 @@ echo "${LOGTITLE} Deleting vhosts"
 rm -f /etc/apache2/sites-enabled/*
 
 echo "${LOGTITLE} Creating vhosts"
-cp vhosts/* /etc/apache2/sites-enabled/
+cp temp/vhosts/* /etc/apache2/sites-enabled/
 
 echo "${LOGTITLE} Creating databases"
 databases=(${VAGRANT_DATABASES//,/ })

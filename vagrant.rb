@@ -27,7 +27,8 @@ end
 
 # Set paths
 vagrantDir      = File.expand_path(".vagrant")
-configDir       = File.expand_path(".vagrant/config")
+goboxDir        = File.expand_path(".vagrant/gobox")
+tempDir         = File.expand_path(".vagrant/gobox/temp")
 projectDir      = Dir.pwd
 projectName     = File.basename(projectDir)
 
@@ -63,10 +64,10 @@ else
 end
 
 # Link vagrant map
-box['folders']['/home/vagrant/config'] = configDir
+box['folders']['/home/vagrant/.gobox'] = goboxDir
 
 # Create bash file with project variables
-File.open("#{configDir}/config.bash", 'w+') do |f|
+File.open("#{tempDir}/config.bash", 'w+') do |f|
   box['versions'].each do |k, v|
     f.write("VAGRANT_#{k.upcase}_VERSION=\"#{v}\"\n")
   end
@@ -75,12 +76,12 @@ end
 
 # Create vhosts files
 all_vhosts = []
-template = File.read("#{configDir}/vhost.template")
+template = File.read("#{goboxDir}/resources/vhost.template")
 
 # Create dir if not exists
-FileUtils.mkdir_p "#{configDir}/vhosts/"
+FileUtils.mkdir_p "#{tempDir}/vhosts/"
 # Remove old vhosts
-Dir.glob("#{configDir}/vhosts/*") do |f| File.delete(f) end
+Dir.glob("#{tempDir}/vhosts/*") do |f| File.delete(f) end
 # Create new ones
 box['sites'].each do |target,hostnames|
   hostnames = [*hostnames]
@@ -91,7 +92,7 @@ box['sites'].each do |target,hostnames|
                     .gsub("__PRIMARY__",primary)
                     .gsub("__ALIASES__",hostnames.join(' '))
 
-  File.open("#{configDir}/vhosts/#{primary}.conf", "w+") do |f| f.write(vhost) end
+  File.open("#{tempDir}/vhosts/#{primary}.conf", "w+") do |f| f.write(vhost) end
 end
 
 Vagrant.configure(2) do |config|
@@ -129,12 +130,12 @@ Vagrant.configure(2) do |config|
   # As root, on provision
   config.vm.provision "shell",
     name:         "root_provision",
-    path:         "#{configDir}/provisioners/root_provision.sh"
+    path:         "#{goboxDir}/provisioners/root_provision.sh"
 
-  if File.file?(".provisioners/root_provision.sh")
+  if File.file?("#{vagrantDir}/provisioners/root_provision.sh")
     config.vm.provision "shell",
       name:         "custom_root_provision",
-      path:         ".provisioners/root_provision.sh"
+      path:         "#{vagrantDir}/provisioners/root_provision.sh"
   end
 
   [*box['provisioners']['provision_root']].each do |command|
@@ -146,13 +147,13 @@ Vagrant.configure(2) do |config|
   # As root, always
   config.vm.provision "shell",
     name:         "root_always",
-    path:         "#{configDir}/provisioners/root_always.sh",
+    path:         "#{goboxDir}/provisioners/root_always.sh",
     run:          "always"
 
-  if File.file?(".provisioners/root_always.sh")
+  if File.file?("#{vagrantDir}/provisioners/root_always.sh")
     config.vm.provision "shell",
       name:         "custom_root_always",
-      path:         ".provisioners/root_always.sh",
+      path:         "#{vagrantDir}/provisioners/root_always.sh",
       run:          "always"
   end
 
@@ -166,13 +167,13 @@ Vagrant.configure(2) do |config|
   # As user, on provision
   config.vm.provision "shell",
     name:         "user_provision",
-    path:         "#{configDir}/provisioners/user_provision.sh",
+    path:         "#{goboxDir}/provisioners/user_provision.sh",
     privileged:   false
 
-  if File.file?(".provisioners/user_provision.sh")
+  if File.file?("#{vagrantDir}/provisioners/user_provision.sh")
     config.vm.provision "shell",
       name:         "custom_user_provision",
-      path:         ".provisioners/user_provision.sh",
+      path:         "#{vagrantDir}/provisioners/user_provision.sh",
       privileged:   false
   end
 
@@ -186,14 +187,14 @@ Vagrant.configure(2) do |config|
   # As user, always
   config.vm.provision "shell",
     name:         "user_always",
-    path:         "#{configDir}/provisioners/user_always.sh",
+    path:         "#{goboxDir}/provisioners/user_always.sh",
     run:          "always",
     privileged:   false
 
-  if File.file?(".provisioners/user_always.sh")
+  if File.file?("#{vagrantDir}/provisioners/user_always.sh")
     config.vm.provision "shell",
       name:         "custom_user_always",
-      path:         ".provisioners/user_always.sh",
+      path:         "#{vagrantDir}/provisioners/user_always.sh",
       run:          "always",
       privileged:   false
   end
