@@ -180,7 +180,7 @@ Vagrant.configure(2) do |config|
       privileged:   false
   end
 
-  [*box['provisioners']['provisioners']].each do |command|
+  [*box['provisioners']['provision']].each do |command|
     config.vm.provision "shell",
       name:       "custom_user_provision_inline",
       inline:     command,
