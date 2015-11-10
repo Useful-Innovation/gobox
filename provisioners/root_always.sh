@@ -12,10 +12,9 @@ echo "${LOGTITLE} Creating vhosts"
 cp temp/vhosts/* /etc/apache2/sites-enabled/
 
 echo "${LOGTITLE} Creating databases"
-databases=(${VAGRANT_DATABASES//,/ })
-for i in "${!databases[@]}"
+for i in "${VAGRANT_DATABASES[@]}"
 do
-    mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS \`${databases[i]}\` CHARACTER SET utf8 COLLATE utf8_swedish_ci"
+    mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS \`$i\` CHARACTER SET utf8 COLLATE utf8_swedish_ci"
 done
 
 service apache2 reload

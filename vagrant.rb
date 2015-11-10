@@ -26,11 +26,12 @@ if !Vagrant.has_plugin?("vagrant-hostsupdater")
 end
 
 # Set paths
-vagrantDir      = File.expand_path(".vagrant")
-goboxDir        = File.expand_path(".vagrant/gobox")
-tempDir         = File.expand_path(".vagrant/gobox/temp")
-vhostsDir       = File.expand_path(".vagrant/gobox/temp/vhosts")
-projectDir      = Dir.pwd
+goboxDir        = File.dirname(__FILE__)
+projectDir      = File.expand_path("#{goboxDir}/../..")
+vagrantDir      = File.expand_path("#{goboxDir}/..")
+
+tempDir         = File.expand_path("#{goboxDir}/temp")
+vhostsDir       = File.expand_path("#{goboxDir}/temp/vhosts")
 projectName     = File.basename(projectDir)
 
 # Create paths if not exists
@@ -76,7 +77,7 @@ File.open("#{tempDir}/config.bash", 'w+') do |f|
   box['versions'].each do |k, v|
     f.write("VAGRANT_#{k.upcase}_VERSION=\"#{v}\"\n")
   end
-  f.write("VAGRANT_DATABASES=\"#{[*box['databases']].join(',')}\"\n")
+  f.write("VAGRANT_DATABASES=(#{[*box['databases']].join(' ')})\n")
 end
 
 # Create vhosts files

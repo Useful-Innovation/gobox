@@ -1,3 +1,4 @@
 # -*- mode: ruby -*-
 
-require("./.vagrant/gobox/vagrant.rb")
+path = File.dirname(__FILE__)
+require("#{path}/.vagrant/gobox/vagrant.rb")
