@@ -57,8 +57,8 @@ defaults = {
 }
 
 # Read config and set defaults
-if File.file?('gobox.yaml')
-  box = YAML.load_file('gobox.yaml')
+if File.file?("#{projectDir}/gobox.yaml")
+  box = YAML.load_file("#{projectDir}/gobox.yaml")
   box['machine']        = defaults["machine"].merge!(box['machine'] || {})
   box['folders']      ||= defaults["folders"]
   box['sites']        ||= defaults["sites"]
