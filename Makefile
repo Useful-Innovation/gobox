@@ -5,5 +5,4 @@ all:
 	mkdir -p ../provisioners
 	cp -n resources/custom_provisioners/* ../provisioners/
 
-	grep -q -F '!.vagrant' ../../.gitignore || echo '!.vagrant' >> ../../.gitignore
-	grep -q -F '.vagrant/machines' ../../.gitignore || echo '.vagrant/machines' >> ../../.gitignore
+	grep -q -F '/.vagrant/machines' ../../.gitignore || echo '\n/.vagrant/machines' >> ../../.gitignore
