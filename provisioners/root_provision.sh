@@ -25,6 +25,7 @@ apt-get install -yqq \
     php5-mysql \
     php5-curl \
     php5-xdebug \
+    php5-gd \
 
 # Set up xdebug
 PHP_INI=/etc/php5/apache2/php.ini
