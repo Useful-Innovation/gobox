@@ -22,6 +22,7 @@ if ! hash php5 2>/dev/null; then
         mysql-server=${VAGRANT_MYSQL_VERSION} \
         php5-mysql \
         php5-curl \
+        php5-gd \
         php5-xdebug
 
         # Set up xdebug
