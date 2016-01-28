@@ -23,14 +23,19 @@ if ! hash php5 2>/dev/null; then
         php5-mysql \
         php5-curl \
         php5-gd \
-        php5-xdebug
+        php5-xdebug \
+        php5-mcrypt \
 
         # Set up xdebug
         PHP_INI=/etc/php5/apache2/php.ini
         grep -q -F 'zend_extension=xdebug.so' $PHP_INI || echo -e '\n\nzend_extension=xdebug.so' >> $PHP_INI
 
         a2enmod rewrite
+        php5enmod mcrypt
 fi
+
+echo "${LOGTITLE} Setting xdebug max nesting level"
+grep -q -F 'xdebug.max_nesting_level=256' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.max_nesting_level=256' >> /etc/php5/mods-available/xdebug.ini
 
 echo "${LOGTITLE} Install server tools"
 if ! hash git 2>/dev/null; then
