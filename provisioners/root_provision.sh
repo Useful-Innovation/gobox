@@ -8,7 +8,7 @@ echo "${LOGTITLE}"
 apt-get install -yqq debconf-utils
 
 
-if ! hash php5 2>/dev/null; then
+if ! [ -f /usr/bin/php5 ]; then
     echo "${LOGTITLE} Install server components"
     # Set these to prevent mysql-server installation from prompting for root password.
     export DEBIAN_FRONTEND=noninteractive
@@ -38,13 +38,13 @@ apt-get install -yqq \
 echo "${LOGTITLE} Setting xdebug max nesting level"
 grep -q -F 'xdebug.max_nesting_level=256' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.max_nesting_level=256' >> /etc/php5/mods-available/xdebug.ini
 
-if ! hash git 2>/dev/null; then
+if ! [ -f /usr/bin/git ]; then
     echo "${LOGTITLE} Install server tools"
     apt-get install -yqq \
         git
 fi
 
-if ! hash node 2>/dev/null; then
+if ! [ -f /usr/bin/node ]; then
     echo "${LOGTITLE} Install node packages"
     curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
     sudo apt-get install -yqq nodejs
@@ -56,7 +56,7 @@ echo "${LOGTITLE} Install locales"
 locale-gen en_US en_US.UTF-8 sv_SE sv_SE.UTF-8
 dpkg-reconfigure locales
 
-if ! hash /usr/local/bin/composer 2>/dev/null; then
+if ! [ -f /usr/local/bin/composer ]; then
     echo "${LOGTITLE} Install composer"
     curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/local/bin/composer
