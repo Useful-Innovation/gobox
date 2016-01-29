@@ -35,8 +35,17 @@ apt-get install -yqq \
     a2enmod rewrite
     php5enmod mcrypt
 
-echo "${LOGTITLE} Setting xdebug max nesting level"
+echo "${LOGTITLE} Setting xdebug.max_nesting_level"
 grep -q -F 'xdebug.max_nesting_level=256' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.max_nesting_level=256' >> /etc/php5/mods-available/xdebug.ini
+
+echo "${LOGTITLE} Setting xdebug.remote_enable"
+grep -q -F 'xdebug.remote_enable=on' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.remote_enable=on' >> /etc/php5/mods-available/xdebug.ini
+
+echo "${LOGTITLE} Setting xdebug.remote_connect_back"
+grep -q -F 'xdebug.remote_connect_back=on' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.remote_connect_back=on' >> /etc/php5/mods-available/xdebug.ini
+
+echo "${LOGTITLE} Setting xdebug.idekey"
+grep -q -F 'xdebug.idekey="vagrant"' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.idekey="vagrant"' >> /etc/php5/mods-available/xdebug.ini
 
 if ! [ -f /usr/bin/git ]; then
     echo "${LOGTITLE} Install server tools"
