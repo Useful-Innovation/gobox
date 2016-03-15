@@ -36,7 +36,7 @@ apt-get install -yqq \
     php5enmod mcrypt
 
 echo "${LOGTITLE} Setting xdebug.max_nesting_level"
-grep -q -F 'xdebug.max_nesting_level=256' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.max_nesting_level=256' >> /etc/php5/mods-available/xdebug.ini
+grep -q -F 'xdebug.max_nesting_level=500' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.max_nesting_level=500' >> /etc/php5/mods-available/xdebug.ini
 
 echo "${LOGTITLE} Setting xdebug.remote_enable"
 grep -q -F 'xdebug.remote_enable=on' /etc/php5/mods-available/xdebug.ini || echo 'xdebug.remote_enable=on' >> /etc/php5/mods-available/xdebug.ini
