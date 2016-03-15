@@ -128,7 +128,7 @@ Vagrant.configure(2) do |config|
   # Synced folders
   box['folders'].each do |dest,src|
     config.vm.synced_folder File.expand_path(src), dest,
-      # :mount_options => ["dmode=777","fmode=666"]
+      :mount_options => ['nolock,vers=3,udp,noatime,actimeo=1'],
       :nfs => true
   end
 
