@@ -120,7 +120,26 @@ Vagrant.configure(2) do |config|
   # VM configuration
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
-    vb.memory = box['machine']["memory"]
+    # vb.memory = box['machine']["memory"]
+
+    host = RbConfig::CONFIG['host_os']
+
+    # Give VM 1/4 system memory
+    if host =~ /darwin/
+      # sysctl returns Bytes and we need to convert to MB
+      mem = `sysctl -n hw.memsize`.to_i / 1024
+    elsif host =~ /linux/
+      # meminfo shows KB and we need to convert to MB
+      mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i
+    elsif host =~ /mswin|mingw|cygwin/
+      # Windows code via https://github.com/rdsubhas/vagrant-faster
+      mem = `wmic computersystem Get TotalPhysicalMemory`.split[1].to_i / 1024
+    end
+
+    mem = mem / 1024 / 4
+    vb.customize ["modifyvm", :id, "--memory", mem]
+
+
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
