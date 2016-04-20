@@ -59,12 +59,16 @@ defaults = {
 # Read config and set defaults
 if File.file?("#{projectDir}/gobox.yaml")
   box = YAML.load_file("#{projectDir}/gobox.yaml")
-  box['machine']        = defaults["machine"].merge!(box['machine'] || {})
-  box['folders']      ||= defaults["folders"]
-  box['sites']        ||= defaults["sites"]
-  box['provisioners'] ||= defaults["provisioners"]
-  box['databases']    ||= defaults["databases"]
-  box['versions']       = defaults["versions"].merge!(box['versions'] || {})
+  if box.nil?
+    box = defaults
+  else
+    box['machine']        = defaults["machine"].merge!(box['machine'] || {})
+    box['folders']      ||= defaults["folders"]
+    box['sites']        ||= defaults["sites"]
+    box['provisioners'] ||= defaults["provisioners"]
+    box['databases']    ||= defaults["databases"]
+    box['versions']       = defaults["versions"].merge!(box['versions'] || {})
+  end
 else
   box = defaults
 end
