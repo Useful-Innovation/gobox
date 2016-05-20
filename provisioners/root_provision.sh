@@ -19,9 +19,9 @@ if ! [ -f /usr/bin/php5 ]; then
 fi
 
 apt-get install -yqq \
-    apache2=${VAGRANT_APACHE_VERSION} \
-    php5=${VAGRANT_PHP_VERSION} \
-    mysql-server=${VAGRANT_MYSQL_VERSION} \
+    apache2 \
+    php5 \
+    mysql-server \
     php5-mysql \
     php5-curl \
     php5-gd \
