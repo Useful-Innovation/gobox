@@ -32,7 +32,7 @@ sites:                            # object of target => alias/-es, defaults to /
 versions:                         # all or some can be omitted
     apache:     2.4.*             # default, can be omitted, has to be compatible with apt-get
     php:        5.5.*             # default, can be omitted, has to be compatible with apt-get
-    mysql:      5.5.*             # default, can be omitted, has to be compatible with apt-get
+    mysql:      5.6.*             # default, can be omitted, has to be compatible with apt-get
 databases:                        # str/array, can be omitted, defaults to one database named {projectName}
     - foo
 provisioners:                     # Inline provision commands. all or some can be omitted

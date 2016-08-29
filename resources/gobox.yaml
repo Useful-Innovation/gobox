@@ -16,7 +16,7 @@ sites:                            # object of target => alias/-es
 versions:                         # all or some can be omitted
     apache:     2.4.*             # default, can be omitted, has to be compatible with apt-get
     php:        5.5.*             # default, can be omitted, has to be compatible with apt-get
-    mysql:      5.5.*             # default, can be omitted, has to be compatible with apt-get
+    mysql:      5.6.*             # default, can be omitted, has to be compatible with apt-get
 databases:                        # str/array, can be omitted
     - foo
 provision:                        # all or some can be omitted
