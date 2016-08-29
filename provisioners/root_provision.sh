@@ -21,7 +21,7 @@ fi
 apt-get install -yqq \
     apache2 \
     php5 \
-    mysql-server \
+    mysql-server-${VAGRANT_MYSQL_VERSION} \
     php5-mysql \
     php5-curl \
     php5-gd \
