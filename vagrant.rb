@@ -51,7 +51,7 @@ defaults = {
   "provisioners" => {},
   "versions"  => {
     "apache"    => "2.4.*",
-    "php"       => "5.5.*",
+    "php"       => "5.6.*",
     "mysql"     => "5.6.*",
   }
 }
