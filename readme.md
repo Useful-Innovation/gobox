@@ -5,7 +5,7 @@ Easy vagrant. Configure box in gobox.yaml. Vhosts will be created and hosts file
 From your project folder, run:
 
 ```
-git submodule add git@github.com:Useful-Innovation/gobox.git .vagrant/gobox && make -C .vagrant/gobox
+git submodule add -b xenial64lamp7 git@github.com:gobrave/gobox.git .vagrant/gobox && make -C .vagrant/gobox
 ```
 
 A Vagrantfile and a sample gobox.yaml will be created.
@@ -17,7 +17,7 @@ A Vagrantfile and a sample gobox.yaml will be created.
 ```yaml
 ---
 machine:                          # all or some can be omitted
-    box:        ubuntu/trusty64   # default, can be omitted
+    box:        gobrave/xenial64lamp7   # default, can be omitted
     memory:     1024              # default, can be omitted
     ip:         192.168.13.37     # can be omitted, defaults to 192.168.200.{hashed projectName}
     hostname:   MYBOX             # can be omitted, defaults to project directory name
@@ -29,10 +29,6 @@ sites:                            # object of target => alias/-es, defaults to /
         -   foo.dev
         -   www.foo.dev
     /home/vagrant/bar: api.foo.dev
-versions:                         # all or some can be omitted
-    apache:     2.4.*             # default, can be omitted, has to be compatible with apt-get
-    php:        5.5.*             # default, can be omitted, has to be compatible with apt-get
-    mysql:      5.6.*             # default, can be omitted, has to be compatible with apt-get
 databases:                        # str/array, can be omitted, defaults to one database named {projectName}
     - foo
 provisioners:                     # Inline provision commands. all or some can be omitted

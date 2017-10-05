@@ -41,7 +41,7 @@ FileUtils.mkdir_p "#{vhostsDir}"
 # Defaults
 defaults = {
   "machine"   => {
-    "box"       => "ubuntu/trusty64",
+    "box"       => "gobrave/xenial64lamp7",
     "memory"    => 1024,
     "hostname"  => projectName
   },
@@ -49,11 +49,6 @@ defaults = {
   "sites"     => {"/home/vagrant/#{projectName}" => projectName},
   "databases" => projectName,
   "provisioners" => {},
-  "versions"  => {
-    "apache"    => "2.4.*",
-    "php"       => "5.6.*",
-    "mysql"     => "5.6.*",
-  }
 }
 
 # Read config and set defaults
@@ -67,7 +62,6 @@ if File.file?("#{projectDir}/gobox.yaml")
     box['sites']        ||= defaults["sites"]
     box['provisioners'] ||= defaults["provisioners"]
     box['databases']    ||= defaults["databases"]
-    box['versions']       = defaults["versions"].merge!(box['versions'] || {})
   end
 else
   box = defaults
@@ -78,9 +72,6 @@ box['folders']['/home/vagrant/.gobox'] = goboxDir
 
 # Create bash file with project variables
 File.open("#{tempDir}/config.bash", 'w+') do |f|
-  box['versions'].each do |k, v|
-    f.write("VAGRANT_#{k.upcase}_VERSION=\"#{v}\"\n")
-  end
   f.write("VAGRANT_DATABASES=(#{[*box['databases']].join(' ')})\n")
 end
 
