@@ -108,6 +108,8 @@ Vagrant.configure(2) do |config|
 
   # Use hosts ssh agent
   config.ssh.forward_agent = true
+  config.ssh.username = 'vagrant'
+  config.ssh.password = 'vagrant'
 
   # Push dirs as aliases to hostsupdater
   config.hostsupdater.aliases = all_vhosts
