@@ -6,4 +6,4 @@ LOGTITLE="----- Provisioning [root:provision]"
 echo "${LOGTITLE}"
 
 apt-get update
-apt-get install libapache2-mod-php
+apt-get install -yqq libapache2-mod-php
