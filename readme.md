@@ -26,9 +26,9 @@ folders:                          # object of target => source, defaults to /hom
     /home/vagrant/bar: bar
 sites:                            # object of target => alias/-es, defaults to /home/vagrant/{projectName} => {projectName}
     /home/vagrant/foo:
-        -   foo.dev
-        -   www.foo.dev
-    /home/vagrant/bar: api.foo.dev
+        -   foo.local
+        -   www.foo.local
+    /home/vagrant/bar: api.foo.local
 databases:                        # str/array, can be omitted, defaults to one database named {projectName}
     - foo
 provisioners:                     # Inline provision commands. all or some can be omitted

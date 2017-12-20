@@ -9,10 +9,10 @@
 #     /home/vagrant/bar: bar
 # sites:                            # object of target => alias/-es
 #     /home/vagrant/foo:
-#         -   foo.dev
-#         -   www.foo.dev
+#         -   foo.local
+#         -   www.foo.local
 #     /home/vagrant/bar:
-#         -   api.foo.dev
+#         -   api.foo.local
 # databases:                        # str/array, can be omitted
 #     - foo
 # provision:                        # all or some can be omitted
