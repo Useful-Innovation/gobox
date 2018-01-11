@@ -17,4 +17,10 @@ do
     mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS \`$i\` CHARACTER SET utf8 COLLATE utf8_swedish_ci"
 done
 
+echo "${LOGTITLE} Creating test databases"
+for i in "${VAGRANT_DATABASES[@]}"
+do
+    mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS \`${i}_test\` CHARACTER SET utf8 COLLATE utf8_swedish_ci"
+done
+
 service apache2 reload || service apache2 start
