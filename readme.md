@@ -5,7 +5,7 @@ Easy vagrant. Configure box in gobox.yaml. Vhosts will be created and hosts file
 From your project folder, run:
 
 ```
-git submodule add git@github.com:Useful-Innovation/gobox.git .vagrant/gobox && make -C .vagrant/gobox
+git submodule add git@github.com:gobrave/gobox.git .vagrant/gobox && make -C .vagrant/gobox
 ```
 
 A Vagrantfile and a sample gobox.yaml will be created.
