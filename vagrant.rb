@@ -26,17 +26,31 @@ if !Vagrant.has_plugin?("vagrant-hostsupdater")
 end
 
 # Set paths
-goboxDir        = File.dirname(__FILE__)
-projectDir      = File.expand_path("#{goboxDir}/../..")
-vagrantDir      = File.expand_path("#{goboxDir}/..")
+goboxDir = File.dirname(__FILE__)
+mountDir = goboxDir
 
-tempDir         = File.expand_path("#{goboxDir}/temp")
-vhostsDir       = File.expand_path("#{goboxDir}/temp/vhosts")
-projectName     = File.basename(projectDir)
+tempDir   = File.expand_path("#{goboxDir}/temp")
+vhostsDir = File.expand_path("#{goboxDir}/temp/vhosts")
 
 # Create paths if not exists
 FileUtils.mkdir_p "#{tempDir}"
 FileUtils.mkdir_p "#{vhostsDir}"
+
+template  = File.read("#{goboxDir}/resources/vhost.template")
+
+## Mac
+if RUBY_PLATFORM == 'x86_64-darwin13'
+  ## Catalina NFS mount base
+  if %x('uname' '-r').split('.').first == '19'
+    mountDir = "/System/Volumes/Data#{mountDir}"
+  end
+end
+
+projectMountDir = File.expand_path("#{mountDir}/../..")
+
+projectDir  = File.expand_path("#{goboxDir}/../..")
+vagrantDir  = File.expand_path("#{goboxDir}/..")
+projectName = File.basename(projectDir)
 
 # Defaults
 defaults = {
@@ -45,7 +59,7 @@ defaults = {
     "memory"    => 1024,
     "hostname"  => projectName
   },
-  "folders"   => {"/home/vagrant/#{projectName}" => projectDir},
+  "folders"   => {"/home/vagrant/#{projectName}" => projectMountDir},
   "sites"     => {"/home/vagrant/#{projectName}" => projectName},
   "databases" => projectName,
   "provisioners" => {},
@@ -68,7 +82,7 @@ else
 end
 
 # Link vagrant map
-box['folders']['/home/vagrant/.gobox'] = goboxDir
+box['folders']['/home/vagrant/.gobox'] = mountDir
 
 # Create bash file with project variables
 File.open("#{tempDir}/config.bash", 'w+') do |f|
@@ -77,7 +91,6 @@ end
 
 # Create vhosts files
 all_vhosts = []
-template = File.read("#{goboxDir}/resources/vhost.template")
 
 # Remove old vhosts
 Dir.glob("#{vhostsDir}/*") do |f| File.delete(f) end
